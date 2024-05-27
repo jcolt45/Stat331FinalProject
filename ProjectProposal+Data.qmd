@@ -18,6 +18,23 @@ execute:
   warning: false
 ---
 
+## Data and Variable Description
+
+To analyze the association between a country’s Corruption Perception Index (CPI) and World Happiness Report (WHR) we are using data obtained from Gapminder, a Swedish website that collects time series data from multiple sources to create unique datasets that cannot be found elsewhere. We are collecting data from Gapminder for both of our variables, with individual countries as the observational unit.
+
+Our explanatory variable is the Corruption Perception Index, which is an index that is published annually by the non-government organization, Transparency International. The index ranks 180 countries on a scale of 0 (highly corrupt) to 100 (very clean) based on how corrupt their governments are each year. It is optimal for a country to have the highest score possible because that would indicate less corruption in their government.
+
+Our response variable is a Happiness Score from the World Happiness Report, a partnership of Gallup, the Oxford Wellbeing Research Centre, the UN Sustainable Development Solutions Network, and the WHR’s Editorial Board, under which the report is published. Each observation is the national average response of life evaluations asking individuals to rate their current lives on a scale of 0 to 10 (with 10 meaning the individual has a perfect life) -- a question called the “Cantril Ladder.” Gapminder converted the observations to a scale of 0 to 100, which works well with our explanatory variable (CPI) as they are on the same scales in our datasets.
+
+## Hypothesized Relationship Between Our Variables
+
+We expect a positive relationship between Corruption Score and Happiness Score because we believe that countries with high corruption scores (meaning the country has low corruption) would experience more happiness overall. If a nation’s government is suspected to be corrupt, we hypothesize that it is more likely for their citizens to experience lower rates of happiness, since their government is ineffective. Corruption usually leads to a lower quality of life, since the economy is overall damaged and run inefficiently by the government’s misconduct, leading to lower potential output in the economic long run and lower living standards for its citizens. Corrupt economic operations, according to Elvin Mirzayev -- a writer for Investopedia, often “lead to monopolies or oligopolies in the economy.” Monopolies are objectively disadvantageous to buyers in the economy, and lead to high prices and lower quality products for consumers. Overall, we would expect a nation with high corruption (a low CPI) to have a low WHR score, while a nation with low corruption (high CPI) would experience higher WHR.
+
+Citations: 
+https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp 
+
+## Data Cleaning
+
 ```{r setup}
 library(tidyverse)
 library(janitor)

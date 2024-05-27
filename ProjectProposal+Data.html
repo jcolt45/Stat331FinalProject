@@ -3075,7 +3075,15 @@ vertical-align: -.125em;
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-and-variable-description" id="toc-data-and-variable-description" class="nav-link active" data-scroll-target="#data-and-variable-description">Data and Variable Description</a></li>
+  <li><a href="#hypothesized-relationship-between-our-variables" id="toc-hypothesized-relationship-between-our-variables" class="nav-link" data-scroll-target="#hypothesized-relationship-between-our-variables">Hypothesized Relationship Between Our Variables</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  </ul>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -3107,6 +3115,19 @@ vertical-align: -.125em;
 </header>
 
 
+<section id="data-and-variable-description" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-variable-description">Data and Variable Description</h2>
+<p>To analyze the association between a country’s Corruption Perception Index (CPI) and World Happiness Report (WHR) we are using data obtained from Gapminder, a Swedish website that collects time series data from multiple sources to create unique datasets that cannot be found elsewhere. We are collecting data from Gapminder for both of our variables, with individual countries as the observational unit.</p>
+<p>Our explanatory variable is the Corruption Perception Index, which is an index that is published annually by the non-government organization, Transparency International. The index ranks 180 countries on a scale of 0 (highly corrupt) to 100 (very clean) based on how corrupt their governments are each year. It is optimal for a country to have the highest score possible because that would indicate less corruption in their government.</p>
+<p>Our response variable is a Happiness Score from the World Happiness Report, a partnership of Gallup, the Oxford Wellbeing Research Centre, the UN Sustainable Development Solutions Network, and the WHR’s Editorial Board, under which the report is published. Each observation is the national average response of life evaluations asking individuals to rate their current lives on a scale of 0 to 10 (with 10 meaning the individual has a perfect life) – a question called the “Cantril Ladder.” Gapminder converted the observations to a scale of 0 to 100, which works well with our explanatory variable (CPI) as they are on the same scales in our datasets.</p>
+</section>
+<section id="hypothesized-relationship-between-our-variables" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesized-relationship-between-our-variables">Hypothesized Relationship Between Our Variables</h2>
+<p>We expect a positive relationship between Corruption Score and Happiness Score because we believe that countries with high corruption scores (meaning the country has low corruption) would experience more happiness overall. If a nation’s government is suspected to be corrupt, we hypothesize that it is more likely for their citizens to experience lower rates of happiness, since their government is ineffective. Corruption usually leads to a lower quality of life, since the economy is overall damaged and run inefficiently by the government’s misconduct, leading to lower potential output in the economic long run and lower living standards for its citizens. Corrupt economic operations, according to Elvin Mirzayev – a writer for Investopedia, often “lead to monopolies or oligopolies in the economy.” Monopolies are objectively disadvantageous to buyers in the economy, and lead to high prices and lower quality products for consumers. Overall, we would expect a nation with high corruption (a low CPI) to have a low WHR score, while a nation with low corruption (high CPI) would experience higher WHR.</p>
+<p>Citations: https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp</p>
+</section>
+<section id="data-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
@@ -3138,6 +3159,7 @@ vertical-align: -.125em;
 </div>
 <!-- -->
 
+</section>
 
 </main>
 <!-- /main column -->
@@ -3621,38 +3643,55 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="in">corruption &lt;- read.csv(&quot;corruption_perception_index.csv&quot;)</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="in">happiness &lt;- read.csv(&quot;hapiscore.csv&quot;)</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>happiness <span class="ot">&lt;-</span> happiness <span class="sc">|&gt;</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, x2012, x2013, x2014, x2015, x2016, x2017) <span class="sc">|&gt;</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(x2012, x2013, x2014, x2015, x2016, x2017), </span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;happiness&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">if_any</span>(<span class="at">.cols =</span> <span class="fu">everything</span>(), <span class="at">.fns =</span> is.na)) <span class="sc">|&gt;</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(year), <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">substr</span>(.x, <span class="dv">2</span>, <span class="dv">5</span>)))</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>corruption <span class="ot">&lt;-</span> corruption <span class="sc">|&gt;</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(x2012, x2013, x2014, x2015, x2016, x2017), </span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;corruption&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">if_any</span>(<span class="at">.cols =</span> <span class="fu">everything</span>(), <span class="at">.fns =</span> is.na)) <span class="sc">|&gt;</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(year), <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">substr</span>(.x, <span class="dv">2</span>, <span class="dv">5</span>)))</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> happiness <span class="sc">|&gt;</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(corruption, <span class="fu">join_by</span>(country, year))</span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data and Variable Description</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>To analyze the association between a country’s Corruption Perception Index (CPI) and World Happiness Report (WHR) we are using data obtained from Gapminder, a Swedish website that collects time series data from multiple sources to create unique datasets that cannot be found elsewhere. We are collecting data from Gapminder for both of our variables, with individual countries as the observational unit.</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>Our explanatory variable is the Corruption Perception Index, which is an index that is published annually by the non-government organization, Transparency International. The index ranks 180 countries on a scale of 0 (highly corrupt) to 100 (very clean) based on how corrupt their governments are each year. It is optimal for a country to have the highest score possible because that would indicate less corruption in their government.</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>Our response variable is a Happiness Score from the World Happiness Report, a partnership of Gallup, the Oxford Wellbeing Research Centre, the UN Sustainable Development Solutions Network, and the WHR’s Editorial Board, under which the report is published. Each observation is the national average response of life evaluations asking individuals to rate their current lives on a scale of 0 to 10 (with 10 meaning the individual has a perfect life) -- a question called the “Cantril Ladder.” Gapminder converted the observations to a scale of 0 to 100, which works well with our explanatory variable (CPI) as they are on the same scales in our datasets.</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hypothesized Relationship Between Our Variables</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>We expect a positive relationship between Corruption Score and Happiness Score because we believe that countries with high corruption scores (meaning the country has low corruption) would experience more happiness overall. If a nation’s government is suspected to be corrupt, we hypothesize that it is more likely for their citizens to experience lower rates of happiness, since their government is ineffective. Corruption usually leads to a lower quality of life, since the economy is overall damaged and run inefficiently by the government’s misconduct, leading to lower potential output in the economic long run and lower living standards for its citizens. Corrupt economic operations, according to Elvin Mirzayev -- a writer for Investopedia, often “lead to monopolies or oligopolies in the economy.” Monopolies are objectively disadvantageous to buyers in the economy, and lead to high prices and lower quality products for consumers. Overall, we would expect a nation with high corruption (a low CPI) to have a low WHR score, while a nation with low corruption (high CPI) would experience higher WHR.</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>Citations: </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Cleaning</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="in">corruption &lt;- read.csv(&quot;corruption_perception_index.csv&quot;)</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="in">happiness &lt;- read.csv(&quot;hapiscore.csv&quot;)</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>happiness <span class="ot">&lt;-</span> happiness <span class="sc">|&gt;</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, x2012, x2013, x2014, x2015, x2016, x2017) <span class="sc">|&gt;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(x2012, x2013, x2014, x2015, x2016, x2017), </span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;happiness&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">if_any</span>(<span class="at">.cols =</span> <span class="fu">everything</span>(), <span class="at">.fns =</span> is.na)) <span class="sc">|&gt;</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(year), <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">substr</span>(.x, <span class="dv">2</span>, <span class="dv">5</span>)))</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>corruption <span class="ot">&lt;-</span> corruption <span class="sc">|&gt;</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(x2012, x2013, x2014, x2015, x2016, x2017), </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;corruption&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">if_any</span>(<span class="at">.cols =</span> <span class="fu">everything</span>(), <span class="at">.fns =</span> is.na)) <span class="sc">|&gt;</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(year), <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">substr</span>(.x, <span class="dv">2</span>, <span class="dv">5</span>)))</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> happiness <span class="sc">|&gt;</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(corruption, <span class="fu">join_by</span>(country, year))</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
