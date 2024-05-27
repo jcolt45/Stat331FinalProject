@@ -32,7 +32,8 @@ happiness <- happiness |>
   pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
                names_to = "year",
                values_to = "happiness") |>
-  filter(!if_any(.cols = everything(), .fns = is.na))
+  filter(!if_any(.cols = everything(), .fns = is.na)) |>
+  mutate(across(.cols = c(year), .fns = ~ substr(.x, 2, 5)))
 ```
 
 ```{r}
@@ -41,7 +42,8 @@ corruption <- corruption |>
   pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
                names_to = "year",
                values_to = "corruption") |>
-  filter(!if_any(.cols = everything(), .fns = is.na)) 
+  filter(!if_any(.cols = everything(), .fns = is.na)) |>
+  mutate(across(.cols = c(year), .fns = ~ substr(.x, 2, 5)))
 ```
 
 ```{r}
