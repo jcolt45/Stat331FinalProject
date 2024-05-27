@@ -1,0 +1,51 @@
+---
+title: "Project Proposal + Data"
+author: 
+  - "Jack Colt"
+  - "Finn Balfe"
+  - "John Brune"
+  - "Alex Musco"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r setup}
+library(tidyverse)
+library(janitor)
+corruption <- read.csv("corruption_perception_index.csv")
+happiness <- read.csv("hapiscore.csv")
+```
+
+```{r}
+happiness <- happiness |>
+  clean_names() |>
+  select(country, x2012, x2013, x2014, x2015, x2016, x2017) |>
+  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
+               names_to = "year",
+               values_to = "happiness") |>
+  filter(!if_any(.cols = everything(), .fns = is.na))
+```
+
+```{r}
+corruption <- corruption |>
+  clean_names() |>
+  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
+               names_to = "year",
+               values_to = "corruption") |>
+  filter(!if_any(.cols = everything(), .fns = is.na)) 
+```
+
+```{r}
+data <- happiness |>
+  inner_join(corruption, join_by(country, year))
+```
+
