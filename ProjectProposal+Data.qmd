@@ -18,6 +18,13 @@ execute:
   warning: false
 ---
 
+```{r setup}
+library(tidyverse)
+library(janitor)
+corruption <- read.csv("corruption_perception_index.csv")
+happiness <- read.csv("hapiscore.csv")
+```
+
 ## Data and Variable Description
 
 To analyze the association between a country’s Corruption Perception Index (CPI) and World Happiness Report (WHR) we are using data obtained from Gapminder, a Swedish website that collects time series data from multiple sources to create unique datasets that cannot be found elsewhere. We are collecting data from Gapminder for both of our variables, with individual countries as the observational unit.
@@ -35,12 +42,16 @@ https://www.investopedia.com/articles/investing/012215/how-corruption-affects-em
 
 ## Data Cleaning
 
-```{r setup}
-library(tidyverse)
-library(janitor)
-corruption <- read.csv("corruption_perception_index.csv")
-happiness <- read.csv("hapiscore.csv")
+```{r}
+corruption <- corruption |>
+  clean_names() |>
+  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
+               names_to = "year",
+               values_to = "corruption") |>
+  filter(!(is.na(corruption)))
 ```
+
+*For our corruption data, we first used the janitor package to get our column names in tidy form. Next, we pivot longer the years from 2012 to 2017 because those are the only years we have corruption data for. Then, we remove any observations that contain missing values in the new corruption column. We chose to remove missing values after pivoting because, for countries that are only missing data for some of the years, we want to keep the data for the years we have data for.*
 
 ```{r}
 happiness <- happiness |>
@@ -49,22 +60,21 @@ happiness <- happiness |>
   pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
                names_to = "year",
                values_to = "happiness") |>
-  filter(!if_any(.cols = everything(), .fns = is.na)) |>
-  mutate(across(.cols = c(year), .fns = ~ substr(.x, 2, 5)))
+  filter(!(is.na(happiness)))
 ```
 
-```{r}
-corruption <- corruption |>
-  clean_names() |>
-  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
-               names_to = "year",
-               values_to = "corruption") |>
-  filter(!if_any(.cols = everything(), .fns = is.na)) |>
-  mutate(across(.cols = c(year), .fns = ~ substr(.x, 2, 5)))
-```
+*For our happiness data, we first use the janitor package to get the column names in tidy form. Next, we select the country column and the years 2012 to 2017 because we only have corruption data for those years. Then, we pivot longer those years and remove observations that contain missing values in our new happiness columns for the same reason as the corruption data.*
 
 ```{r}
 data <- happiness |>
-  inner_join(corruption, join_by(country, year))
+  inner_join(corruption, join_by(country, year)) |>
+  mutate(country = fct(country),
+         year = fct(substr(year, 2, 5)))
+```
+
+*Finally, we inner join the happiness and corruption datasets on country name and year. We chose an inner join to remove country, year pairs that we do not have both happiness and corruption scores for. Lastly, we factor the country and year columns and remove the 'x' prefix from the year values.*
+
+```{r}
+glimpse(data)
 ```
 
