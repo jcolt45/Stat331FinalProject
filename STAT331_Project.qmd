@@ -128,3 +128,23 @@ animate(
 From the animation above, we can observe that the relationship between various countries' average happiness scores versus their level of corruption has not changed much between 2012 and 2017, as many of the associations seem to be very similar. This gives us confidence that the association between our two variables tends to be relatively constant over time.
 
 ## Linear Regression
+
+```{r}
+data_by_country <- data |>
+  group_by(country) |>
+  summarise(happiness = mean(happiness),
+            corruption = mean(corruption))
+
+data_lm <- lm(happiness ~ corruption, data = data_by_country)
+summary(data_lm)
+```
+
+$$ŷ=36.03181+0.40679x$$
+
+*Interpret coefficients here*
+
+## Model Fit
+
+```{r}
+#Create table
+```
