@@ -1,0 +1,130 @@
+---
+title: "PC 3: Project Proposal + Data"
+author: 
+  - "Jack Colt"
+  - "Finn Balfe"
+  - "John Brune"
+  - "Alex Musco"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+    code-fold: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r setup}
+library(tidyverse)
+library(janitor)
+library(gganimate)
+library(glue)
+corruption <- read.csv("corruption_perception_index.csv")
+happiness <- read.csv("hapiscore.csv")
+```
+
+# Project Proposal + Data
+
+## Data and Variable Description
+
+To analyze the association between a country’s Corruption Perception Index (CPI) and World Happiness Report (WHR) we are using data obtained from Gapminder, a Swedish website that collects time series data from multiple sources to create unique datasets that cannot be found elsewhere. We are collecting data from Gapminder for both of our variables, with individual countries as the observational unit.
+
+Our explanatory variable is the Corruption Perception Index, which is an index that is published annually by the non-government organization, *Transparency International*. The index ranks 180 countries on a scale of 0 (highly corrupt) to 100 (very clean) based on how corrupt their governments are each year. It is optimal for a country to have the highest score possible because that would indicate less corruption in their government.
+
+Our response variable is a Happiness Score from the World Happiness Report, a partnership of Gallup, the Oxford Wellbeing Research Centre, the UN Sustainable Development Solutions Network, and the WHR’s Editorial Board, under which the report is published. Each observation is the national average response of life evaluations, which are measured by asking individuals to rate their current lives on a scale of 0 to 10 (with 10 meaning the individual has a perfect life) -- a question called the “Cantril Ladder.” Gapminder converted the observations to a scale of 0 to 100, which works well with our explanatory variable (CPI) as they are on the same scales in our datasets.
+
+## Hypothesized Relationship Between Our Variables
+
+We expect a positive relationship between Corruption Score and Happiness Score because we believe that countries with high corruption scores (meaning the country has low corruption) would experience more happiness overall. If a nation’s government is suspected to be corrupt, we hypothesize that it is more likely for their citizens to experience lower rates of happiness, since their government is ineffective. Corruption usually leads to a lower quality of life, since the economy is overall damaged and ran inefficiently by the government’s misconduct, leading to lower potential output in the economic long run and lower living standards for its citizens. According to Elvin Mirzayev, a writer for *Investopedia*, corrupt economic operations often “lead to monopolies or oligopolies in the economy.” Monopolies are objectively harmful to buyers in the economy, and lead to high prices and lower quality products for consumers. Overall, we would expect a nation with high corruption (a low CPI) to have a low WHR score, while a nation with low corruption (high CPI) would experience higher WHR scores.
+
+Citations: 
+
+[investodpedia.com](https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp )
+
+## Data Cleaning
+
+```{r}
+corruption <- corruption |>
+  clean_names() |>
+  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
+               names_to = "year",
+               values_to = "corruption") |>
+  filter(!(is.na(corruption)))
+```
+
+For our corruption data, we first used the janitor package to get our column names in tidy form. Next, we pivot longer the years from 2012 to 2017 because those are the only years we have corruption data for. Then, we remove any observations that contain missing values in the new corruption column. We chose to remove missing values after pivoting because, for countries that are only missing data for some of the years, we want to keep the data for the years we have data for.
+
+```{r}
+happiness <- happiness |>
+  clean_names() |>
+  select(country, x2012, x2013, x2014, x2015, x2016, x2017) |>
+  pivot_longer(cols = c(x2012, x2013, x2014, x2015, x2016, x2017), 
+               names_to = "year",
+               values_to = "happiness") |>
+  filter(!(is.na(happiness)))
+```
+
+For our happiness data, we first use the janitor package to get the column names in tidy form. Next, we select the country column and the years 2012 to 2017 because we only have corruption data for those years. Then, we pivot longer those years and remove observations that contain missing values in our new happiness columns for the same reason as the corruption data.
+
+```{r}
+data <- happiness |>
+  inner_join(corruption, join_by(country, year)) |>
+  mutate(country = fct(country),
+         year = fct(substr(year, 2, 5)))
+```
+
+Finally, we inner join the happiness and corruption datasets on country name and year. We chose an inner join to remove country, year pairs that we do not have both happiness and corruption scores for. Lastly, we factor the country and year columns and remove the 'x' prefix from the year values.
+
+# Linear Regression
+
+## Data Visualization
+
+To analyze the relationship between a country's average happiness score and their CPI score, we will first visualize the variables' relationship through a scatter plot with a fitted linear regression line.
+
+```{r}
+hs_vs_cpi_plot <- ggplot(data = data,
+       mapping = aes(x = corruption,
+                     y = happiness)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship Between Various Countries' Happiness Scores and CPI",
+       subtitle = "Average Happiness Score",
+       y = "",
+       x = "Corruption Perception Index") +
+  theme_bw()
+
+hs_vs_cpi_plot
+```
+The above plot displays our response variable, a country's happiness score, on the y-axis and our explanatory variable, a country's CPI score, on the x-axis and plots the observed values of each country between the years 2012 and 2017. From the plot, we can observe a moderately strong, positive, and linear relationship between the two variables, which aligns with our hypothesis. As a country's CPI score increases (meaning they have less corruption in their government) the nation's average happiness also increases and vice-versa.
+
+Although it is useful to visualize the trend in our variables over all the years in our data (2012 - 2017), we also want to visualize how their relationship has changed over time. We will do this in the animated plot below.
+
+```{r}
+animated_plot <- ggplot(data, aes(x = corruption,
+                                  y = happiness)) +
+  geom_point(aes(color = year)) +
+  geom_smooth(method = "lm", aes(color = year)) +
+  labs(title = "Relationship Between Various Country's Happiness Scores and CPI",
+       subtitle = "Average Happiness Score",
+       y = "",
+       x = "Corruption Perception Index") +
+  theme_bw() +
+  transition_states(year,
+                    transition_length = 2,
+                    state_length = 3) +
+  ggtitle("Various Countries' Happiness Scores vs CPI in {closest_state}")
+  
+animate(
+  animated_plot + enter_fade() + exit_fly(y_loc = 1),
+  renderer = av_renderer()
+)
+```
+
+From the animation above, we can observe that the relationship between various countries' average happiness scores versus their level of corruption has not changed much between 2012 and 2017, as many of the associations seem to be very similar. This gives us confidence that the association between our two variables tends to be relatively constant over time.
+
+## Linear Regression
