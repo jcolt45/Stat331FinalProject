@@ -1,5 +1,5 @@
 ---
-title: "PC 3: Project Proposal + Data"
+title: "How a Nation's Corruption Impacts the Happiness of Their People"
 author: 
   - "Jack Colt"
   - "Finn Balfe"
@@ -129,7 +129,12 @@ From the animation above, we can observe that the relationship between various c
 
 ## Linear Regression
 
+We will now conduct a statistical method known as *Linear Regression* to assess the association between a country's average happiness score and their CPI score. Linear regression is a statistical method used to model and analyze the relationship between a response variable (in our case, average happiness score) and one or more explanatory variables. The goal is to fit a linear equation to the observed data, where the equation predicts the response variable based on the values of the explanatory variables. The simplest form, *simple linear regression*, involves one response and one explanatory variable (which in our case will be CPI score), and finds the best-fitting straight line in equation form $y = mx + b$ that minimizes the sum of the squared differences between observed and predicted values.
+
+To perform linear regression, we want to have only one x-value and one y-value for each of our countries. To do this, we will take the mean value for both average happiness score and CPI score for each country across all the years in our dataset (2012-2017). We chose this method of obtaining one x and y value for each of our countries because we felt it was the method that most represented all the observations in the full dataset, especially because there was not much change in the relationship between our variables over the years as observed in the animated plot in the last section.
+
 ```{r}
+#| results: hide
 data_by_country <- data |>
   group_by(country) |>
   summarise(happiness = mean(happiness),
@@ -139,9 +144,13 @@ data_lm <- lm(happiness ~ corruption, data = data_by_country)
 summary(data_lm)
 ```
 
-$$ŷ=36.03181+0.40679x$$
+After fitting a simple linear model between the average happiness score across the years 2012 through 2017 for each country versus the average CPI score across the years 2012 through 2017 for each country in our dataset, we have obtained our estimated regression equation below:
 
-*Interpret coefficients here*
+$$\hat{y} = 0.40679x + 36.03181$$
+
+**Interpreting Our Coefficients**
+
+According to the fitted linear model above, for every one point increase in the CPI score for a country, the country's mean increase in average happiness score will be about 0.40679 points. Furthermore, if a country's CPI score is 0, meaning they are extremely corrupt, their mean happiness score will be 36.03181 on average, which is a relatively low happiness score. Our intercept does make sense in this context, as it is tehcnically possible for a country to have a CPI score of 0.
 
 ## Model Fit
 
