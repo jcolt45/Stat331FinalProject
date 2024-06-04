@@ -172,6 +172,7 @@ variance_table |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 ```
 
+
 **Interpreting the variability**
 
-From the regression summary, the R2 value is approximately 0.5066, which means that 50.66% of the variability in happiness score is explained by the corruption scores. This moderate R2 value indicates that while corruption is an important factor in deciding happiness score, other variables such as social, economic or political factors likely play a significant role as well. The table of variances is in agreement with the R2 value, illustrating that the remaining variance points to the influence of other factors, suggesting a moderate model fit.
+From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation's average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit.
