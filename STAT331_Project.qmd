@@ -24,6 +24,7 @@ library(tidyverse)
 library(janitor)
 library(gganimate)
 library(glue)
+library(kableExtra)
 corruption <- read.csv("corruption_perception_index.csv")
 happiness <- read.csv("hapiscore.csv")
 ```
@@ -73,7 +74,8 @@ For our happiness data, we first use the janitor package to get the column names
 
 ```{r}
 data <- happiness |>
-  inner_join(corruption, join_by(country, year)) |>
+  inner_join(corruption, 
+             join_by(country, year)) |>
   mutate(country = fct(country),
          year = fct(substr(year, 2, 5)))
 ```
@@ -121,8 +123,7 @@ animated_plot <- ggplot(data, aes(x = corruption,
   
 animate(
   animated_plot + enter_fade() + exit_fly(y_loc = 1),
-  renderer = av_renderer()
-)
+  renderer = av_renderer())
 ```
 
 From the animation above, we can observe that the relationship between various countries' average happiness scores versus their level of corruption has not changed much between 2012 and 2017, as many of the associations seem to be very similar. This gives us confidence that the association between our two variables tends to be relatively constant over time.
@@ -140,7 +141,8 @@ data_by_country <- data |>
   summarise(happiness = mean(happiness),
             corruption = mean(corruption))
 
-data_lm <- lm(happiness ~ corruption, data = data_by_country)
+data_lm <- lm(happiness ~ corruption, 
+              data = data_by_country)
 summary(data_lm)
 ```
 
@@ -150,14 +152,11 @@ $$\hat{y} = 0.40679x + 36.03181$$
 
 **Interpreting Our Coefficients**
 
-According to the fitted linear model above, for every one point increase in the CPI score for a country, the country's mean increase in average happiness score will be about 0.40679 points. Furthermore, if a country's CPI score is 0, meaning they are extremely corrupt, their mean happiness score will be 36.03181 on average, which is a relatively low happiness score. Our intercept does make sense in this context, as it is tehcnically possible for a country to have a CPI score of 0.
+According to the fitted linear model above, for every one point increase in the CPI score for a country, the country's mean increase in average happiness score will be about 0.40679 points. Furthermore, if a country's CPI score is 0, meaning they are extremely corrupt, their mean happiness score will be 36.03181 on average, which is a relatively low happiness score. Our intercept does make sense in this context, as it is technically possible for a country to have a CPI score of 0.
 
 ## Model Fit
 
 ```{r}
-#Create table
-library(kableExtra)
-
 response_variance <- var(data_by_country$happiness)
 fitted_values <- predict(data_lm)
 fitted_variance <- var(fitted_values)
@@ -166,15 +165,13 @@ residual_variance <- var(residuals)
 
 variance_table <- data.frame(
   Metric = c("Variance in Response Values", "Variance in Fitted Values", "Variance in Residuals"),
-  Variance = c(response_variance, fitted_variance, residual_variance)
-)
+  Variance = c(response_variance, fitted_variance, residual_variance))
 
-variance_table %>%
-  kable() %>%
+variance_table |>
+  kable() |>
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
-
 ```
 
 **Interpreting the variability**
 
-From the regression summary, the R2 value is approximately 0.5066, which means that 50.66% of the variability in happiness score is explained by the corruption scores. This moderate R2 value indicates that while corruption is an important factor in deciding happiness score, other variables such as social, economic or politcal factors likely play a signifigant role as well. The table of variances is in agreement with the R2 value, illustrating that the remaining variance points to the influence of other factors, suggesting a moderate model fit
+From the regression summary, the R2 value is approximately 0.5066, which means that 50.66% of the variability in happiness score is explained by the corruption scores. This moderate R2 value indicates that while corruption is an important factor in deciding happiness score, other variables such as social, economic or political factors likely play a significant role as well. The table of variances is in agreement with the R2 value, illustrating that the remaining variance points to the influence of other factors, suggesting a moderate model fit.
