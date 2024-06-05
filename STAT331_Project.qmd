@@ -159,6 +159,8 @@ ggplot(data = data_by_country,
             vjust = -1, size = 3, check_overlap = TRUE)
 ```
 
+Now that we have visualized our new dataset with one observation per country, we will use it to fit our linear model.
+
 ```{r}
 #| results: hide
 data_lm <- lm(happiness ~ corruption, 

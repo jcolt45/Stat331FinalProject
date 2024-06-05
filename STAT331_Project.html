@@ -3648,6 +3648,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>Now that we have visualized our new dataset with one observation per country, we will use it to fit our linear model.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4339,43 +4340,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">check_overlap =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>data_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(happiness <span class="sc">~</span> corruption, </span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> data_by_country)</span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_lm)</span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>After fitting a simple linear model between the average happiness score across the years 2012 through 2017 for each country versus the average CPI score across the years 2012 through 2017 for each country in our dataset, we have obtained our estimated regression equation below:</span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>Now that we have visualized our new dataset with one observation per country, we will use it to fit our linear model.</span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>data_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(happiness <span class="sc">~</span> corruption, </span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> data_by_country)</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_lm)</span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>$$\hat{y} = 0.407x + 36.032$$</span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>After fitting a simple linear model between the average happiness score across the years 2012 through 2017 for each country versus the average CPI score across the years 2012 through 2017 for each country in our dataset, we have obtained our estimated regression equation below:</span>
 <span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>**Interpreting Our Coefficients**</span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>$$\hat{y} = 0.407x + 36.032$$</span>
 <span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>According to the fitted linear model above, for every one point increase in the CPI score for a country, the country&#39;s mean increase in average happiness score will be about 0.407 points. Furthermore, if a country&#39;s CPI score is 0, meaning they are extremely corrupt, their mean happiness score will be about 36.032 on average, which is a relatively low happiness score. Our intercept does make sense in this context, as it is technically possible for a country to have a CPI score of 0.</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>**Interpreting Our Coefficients**</span>
 <span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Fit</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>According to the fitted linear model above, for every one point increase in the CPI score for a country, the country&#39;s mean increase in average happiness score will be about 0.407 points. Furthermore, if a country&#39;s CPI score is 0, meaning they are extremely corrupt, their mean happiness score will be about 36.032 on average, which is a relatively low happiness score. Our intercept does make sense in this context, as it is technically possible for a country to have a CPI score of 0.</span>
 <span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>response_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(data_by_country<span class="sc">$</span>happiness)</span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(data_lm)</span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>fitted_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(fitted_values)</span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(data_lm)</span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>residual_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals)</span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>variance_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Variance in Response Values&quot;</span>, <span class="st">&quot;Variance in Fitted Values&quot;</span>, <span class="st">&quot;Variance in Residuals&quot;</span>),</span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variance =</span> <span class="fu">c</span>(response_variance, fitted_variance, residual_variance))</span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>variance_table <span class="sc">|&gt;</span></span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>))</span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>**Interpreting the variability**</span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Fit</span></span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>response_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(data_by_country<span class="sc">$</span>happiness)</span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(data_lm)</span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>fitted_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(fitted_values)</span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(data_lm)</span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>residual_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals)</span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>variance_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Variance in Response Values&quot;</span>, <span class="st">&quot;Variance in Fitted Values&quot;</span>, <span class="st">&quot;Variance in Residuals&quot;</span>),</span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variance =</span> <span class="fu">c</span>(response_variance, fitted_variance, residual_variance))</span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>variance_table <span class="sc">|&gt;</span></span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>))</span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation&#39;s average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, showing that about half of the variability is left unexplained by the fitted values, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit. Some of the variance in the residuals may be explained by factors such as political freedoms and standards of living, but these extrapolations are outside the scope of this research paper.</span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>**Interpreting the variability**</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation&#39;s average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, showing that about half of the variability is left unexplained by the fitted values, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit. Some of the variance in the residuals may be explained by factors such as political freedoms and standards of living, but these extrapolations are outside the scope of this research paper.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
