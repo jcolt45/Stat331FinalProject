@@ -25,6 +25,7 @@ library(janitor)
 library(gganimate)
 library(glue)
 library(kableExtra)
+library(purrr)
 corruption <- read.csv("corruption_perception_index.csv")
 happiness <- read.csv("hapiscore.csv")
 ```
@@ -198,3 +199,119 @@ variance_table |>
 **Interpreting the variability**
 
 From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation's average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, showing that about half of the variability is left unexplained by the fitted values, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit. Some of the variance in the residuals may be explained by factors such as political freedoms and standards of living, but these extrapolations are outside the scope of this research paper.
+
+# Simulation
+
+In the next section of our analysis, we will use simulation to conduct predictive checks on our fitted model. Predictive checks allow us to assess if our fitted model would produce similar data to our actual observed data, and is an assessment of model fit beyond $R^2$, the sum of squared errors, and the root mean squared error.
+
+## Visualizing simulations from Our Model
+
+With our simple linear regression model, we will generate predictions of each country's average happiness score from the observed CPI score values and add random errors to the predictions. We will first create a function to do this then create a new dataset that is the exact same as the dataset we used for our model but with the simulated average happiness scores as a new variable.
+
+```{r}
+create_pred <- function(mod) {
+  pred <- predict(mod)
+  sd <- sigma(mod)
+  
+  random_errors <- rnorm(length(pred), mean = 0, sd)
+  pred_w_errors <- pred + random_errors
+  
+  return(pred_w_errors)
+}
+
+set.seed(1234)
+sim_data <- data_by_country |>
+  mutate(sim_happiness = create_pred(data_lm))
+```
+
+Now that we have our new dataset with the simulated happiness observations, we will plot the simulated average happiness score versus the observed CPI score for each country and compare it to the plot visualizing the relationship between both observed variables.
+
+```{r}
+#| layout-ncol: 2
+
+ggplot(data = sim_data,
+       mapping = aes(x = corruption,
+                     y = sim_happiness)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = 
+         "Relationship Between Various Countries' Simulated Happiness Scores and CPI",
+       subtitle = "Simulated Average Happiness Score (Out of 100) Between 2012-2017",
+       y = "",
+       x = "Average Corruption Perception Index Score (Out of 100) Between 2012-2017") +
+  coord_cartesian(xlim = c(10, 90), ylim = c(30, 80)) +
+  theme_bw()
+  
+
+ggplot(data = data_by_country,
+       mapping = aes(x = corruption,
+                     y = happiness)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = 
+         "Relationship Between Various Countries' Happiness Scores and CPI",
+       subtitle = "Average Happiness Score (Out of 100) Between 2012-2017",
+       y = "",
+       x = "Average Corruption Perception Index Score (Out of 100) Between 2012-2017") +
+  coord_cartesian(xlim = c(10, 90), ylim = c(30, 80)) +
+  theme_bw()
+```
+
+From the side-by-side plots above, we can see that the simulated average happiness scores are reasonably similar to the observed average happiness scores, as both plots have a moderately strong, positive linear relationship. When studying the plots further, however, we noticed that the relationship with the simulated average happiness scores as the response seems to have a slightly flatter slope and a marginally higher intercept than the relationship with the observed average happiness scores. Depsite these minor differences, the variability in the plots seem relatively similar based on the visualization, and we feel confident about the similarities between the two plots.
+
+## Generating Multiple Predictive Checks
+
+```{r}
+fit_and_get_r_squared <- function(observed_data, observed_y, simulated_y) {
+  # Create a new data frame with the observed predictor and simulated response
+  combined_data <- data.frame(observed_y, simulated_y)
+  
+  # Remove observations with NA values
+  combined_data <- na.omit(combined_data)
+  
+  # Fit the model of observed vs. simulated data
+  simulated_model <- lm(observed_y ~ simulated_y, data = combined_data)
+  
+  # Extract the R-squared value
+  return(summary(simulated_model)$r.squared)
+}
+
+# Function to simulate datasets and collect R-squared values
+simulate_r_squared <- function(observed_data, formula, n_simulations = 1000) {
+  # Fit the initial model
+  mod <- lm(formula, data = observed_data)
+  
+  # Generate simulated response variables using map()
+  simulated_responses <- map(1:n_simulations, ~ create_pred(mod))
+  
+  # Extract the observed response variable
+  observed_y <- observed_data[[all.vars(formula)[1]]]
+  
+  # Collect R-squared values using map_dbl()
+  r_squared_values <- map_dbl(simulated_responses, ~ fit_and_get_r_squared(observed_data, observed_y, .x))
+  
+  return(r_squared_values)
+}
+
+# Example usage
+set.seed(123) # For reproducibility
+
+# Assuming your observed data is in a data frame called 'data_by_country'
+# and you have a formula specifying the relationship, e.g., y ~ x
+
+formula <- happiness ~ corruption
+
+# Generate 1000 simulated datasets and collect R-squared values
+r_squared_values <- simulate_r_squared(data_by_country, formula, n_simulations = 1000)
+
+# Plot the distribution of the R-squared values
+r_squared_df <- data.frame(r_squared = r_squared_values)
+
+ggplot(r_squared_df, aes(x = r_squared)) +
+  geom_histogram(binwidth = 0.01, color = "black", fill = "blue") +
+  labs(title = "Distribution of R-squared Values from Simulated Regressions",
+       subtitle = "Frequency",
+       x = "R-squared",
+       y = "") +
+  theme_bw()
+```
