@@ -44,10 +44,6 @@ Our response variable is a Happiness Score from the World Happiness Report, a pa
 
 We expect a positive relationship between Corruption Score and Happiness Score because we believe that countries with high corruption scores (meaning the country has low corruption) would experience more happiness overall. If a nation’s government is suspected to be corrupt, we hypothesize that it is more likely for their citizens to experience lower rates of happiness, since their government is ineffective. Corruption usually leads to a lower quality of life, since the economy is overall damaged and ran inefficiently by the government’s misconduct, leading to lower potential output in the economic long run and lower living standards for its citizens. According to Elvin Mirzayev, a writer for *Investopedia*, corrupt economic operations often “lead to monopolies or oligopolies in the economy.” Monopolies are objectively harmful to buyers in the economy, and lead to high prices and lower quality products for consumers. Overall, we would expect a nation with high corruption (a low CPI) to have a low WHR score, while a nation with low corruption (high CPI) would experience higher WHR scores.
 
-Citations: 
-
-[investodpedia.com](https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp )
-
 ## Data Cleaning
 
 ```{r}
@@ -261,57 +257,55 @@ From the side-by-side plots above, we can see that the simulated average happine
 
 ## Generating Multiple Predictive Checks
 
+To conduct predictive checks, we will generate 1,000 simulated datasets and regress each against our observed dataset. We will then keep the $R^2$ value from each regression and plot the distribution of the $R^2$ values from the regressions to further assess our model's fit. If the $R^2$ values are distributed closer to 1, that would indicate good fit, however, if they are closer to 0, that would indicate that our model is not as good of a fit.
+
 ```{r}
 fit_and_get_r_squared <- function(observed_data, observed_y, simulated_y) {
-  # Create a new data frame with the observed predictor and simulated response
+
   combined_data <- data.frame(observed_y, simulated_y)
-  
-  # Remove observations with NA values
+
   combined_data <- na.omit(combined_data)
-  
-  # Fit the model of observed vs. simulated data
+
   simulated_model <- lm(observed_y ~ simulated_y, data = combined_data)
-  
-  # Extract the R-squared value
+
   return(summary(simulated_model)$r.squared)
 }
 
-# Function to simulate datasets and collect R-squared values
 simulate_r_squared <- function(observed_data, formula, n_simulations = 1000) {
-  # Fit the initial model
+
   mod <- lm(formula, data = observed_data)
-  
-  # Generate simulated response variables using map()
+
   simulated_responses <- map(1:n_simulations, ~ create_pred(mod))
-  
-  # Extract the observed response variable
+
   observed_y <- observed_data[[all.vars(formula)[1]]]
-  
-  # Collect R-squared values using map_dbl()
+
   r_squared_values <- map_dbl(simulated_responses, ~ fit_and_get_r_squared(observed_data, observed_y, .x))
   
   return(r_squared_values)
 }
 
-# Example usage
-set.seed(123) # For reproducibility
-
-# Assuming your observed data is in a data frame called 'data_by_country'
-# and you have a formula specifying the relationship, e.g., y ~ x
+set.seed(123)
 
 formula <- happiness ~ corruption
 
-# Generate 1000 simulated datasets and collect R-squared values
 r_squared_values <- simulate_r_squared(data_by_country, formula, n_simulations = 1000)
 
-# Plot the distribution of the R-squared values
 r_squared_df <- data.frame(r_squared = r_squared_values)
 
-ggplot(r_squared_df, aes(x = r_squared)) +
-  geom_histogram(binwidth = 0.01, color = "black", fill = "blue") +
+ggplot(data = r_squared_df, 
+       aes(x = r_squared)) +
+  geom_histogram(binwidth = 0.01, color = "black", fill = "steelblue") +
   labs(title = "Distribution of R-squared Values from Simulated Regressions",
        subtitle = "Frequency",
        x = "R-squared",
        y = "") +
   theme_bw()
 ```
+
+Based on the distribution of the 1000 $R^2$ values for the relationship between the simulated and observed average happiness score above, we can conclude that our fitted model would not produce data that is very similar to our observed data since most of the $R^2$ values lie between 0.15 and 0.35. Running this simulation 1000 times means that we are examining numerous possible simulated models that our observed model could produce, and the highest $R^2$ values we attained are around 0.4, meaning only 40% of the variability in our observed happiness scores can be explained by the simulated happiness scores. Without a very strong $R^2$ between observed and simulated happiness scores, it's more difficult to make conclusions based on this data. After conducting predictive checks, we are less confident on the strength of our model fit, however, we can still be assured that CPI score does partially explain some of the variability in the response and is a statistically significant predictor in average happiness score for a country.
+
+# References
+
+[Investopedia.com](https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp)
+
+[ChatGPT.com](https://chatgpt.com/)
