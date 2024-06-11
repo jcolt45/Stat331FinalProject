@@ -3669,6 +3669,7 @@ window.Quarto = {
 </section>
 <section id="model-fit" class="level2">
 <h2 class="anchored" data-anchor-id="model-fit">Model Fit</h2>
+<p>Below is a table displaying the total variance of the response values in our fitted model, and how much of the variance is explained by both our fitted values and our residuals.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4488,140 +4489,142 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Fit</span></span>
 <span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>response_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(data_by_country<span class="sc">$</span>happiness)</span>
-<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(data_lm)</span>
-<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>fitted_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(fitted_values)</span>
-<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(data_lm)</span>
-<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>residual_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals)</span>
-<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a>variance_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Variance in Response Values&quot;</span>, <span class="st">&quot;Variance in Fitted Values&quot;</span>, <span class="st">&quot;Variance in Residuals&quot;</span>),</span>
-<span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variance =</span> <span class="fu">c</span>(response_variance, fitted_variance, residual_variance))</span>
-<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a>variance_table <span class="sc">|&gt;</span></span>
-<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
-<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>))</span>
-<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a>**Interpreting the variability**</span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>Below is a table displaying the total variance of the response values in our fitted model, and how much of the variance is explained by both our fitted values and our residuals.</span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>response_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(data_by_country<span class="sc">$</span>happiness)</span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> <span class="fu">predict</span>(data_lm)</span>
+<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>fitted_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(fitted_values)</span>
+<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(data_lm)</span>
+<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a>residual_variance <span class="ot">&lt;-</span> <span class="fu">var</span>(residuals)</span>
+<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a>variance_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Variance in Response Values&quot;</span>, <span class="st">&quot;Variance in Fitted Values&quot;</span>, <span class="st">&quot;Variance in Residuals&quot;</span>),</span>
+<span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variance =</span> <span class="fu">c</span>(response_variance, fitted_variance, residual_variance))</span>
+<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a>variance_table <span class="sc">|&gt;</span></span>
+<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>))</span>
+<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation&#39;s average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, showing that about half of the variability is left unexplained by the fitted values, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit. Some of the variance in the residuals may be explained by factors such as political freedoms and standards of living, but these extrapolations are outside the scope of this research paper.</span>
+<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>**Interpreting the variability**</span>
 <span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a><span class="fu"># Simulation</span></span>
+<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a>From the regression summary, the $R^2$ value is approximately 0.5066, which means that 50.66% of the variability in a nation&#39;s average happiness score is explained by their CPI score. This moderate $R^2$ value indicates that while CPI is an important factor in predicting happiness score, other variables such as social, economic, or political influences likely play a significant role as well. The table of variances is in agreement with our $R^2$ value, showing that about half of the variability is left unexplained by the fitted values, illustrating that the remaining variance is explained by the residuals and points to the influence of factors not included in our model, suggesting a moderate model fit. Some of the variance in the residuals may be explained by factors such as political freedoms and standards of living, but these extrapolations are outside the scope of this research paper.</span>
 <span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a>In the next section of our analysis, we will use simulation to conduct predictive checks on our fitted model. Predictive checks allow us to assess if our fitted model would produce similar data to our actual observed data, and is an assessment of model fit beyond $R^2$, the sum of squared errors, and the root mean squared error.</span>
+<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a><span class="fu"># Simulation</span></span>
 <span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizing simulations from Our Model</span></span>
+<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a>In the next section of our analysis, we will use simulation to conduct predictive checks on our fitted model. Predictive checks allow us to assess if our fitted model would produce similar data to our actual observed data, and is an assessment of model fit beyond $R^2$, the sum of squared errors, and the root mean squared error.</span>
 <span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a>With our simple linear regression model, we will generate predictions of each country&#39;s average happiness score from the observed CPI score values and add random errors to the predictions. We will first create a function to do this then create a new dataset that is the exact same as the dataset we used for our model but with the simulated average happiness scores as a new variable.</span>
+<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizing simulations from Our Model</span></span>
 <span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a>create_pred <span class="ot">&lt;-</span> <span class="cf">function</span>(mod) {</span>
-<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod)</span>
-<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a>  sd <span class="ot">&lt;-</span> <span class="fu">sigma</span>(mod)</span>
-<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a>  random_errors <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(pred), <span class="at">mean =</span> <span class="dv">0</span>, sd)</span>
-<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a>  pred_w_errors <span class="ot">&lt;-</span> pred <span class="sc">+</span> random_errors</span>
-<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pred_w_errors)</span>
-<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> data_by_country <span class="sc">|&gt;</span></span>
-<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sim_happiness =</span> <span class="fu">create_pred</span>(data_lm))</span>
-<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a>Now that we have our new dataset with the simulated happiness observations, we will plot the simulated average happiness score versus the observed CPI score for each country and compare it to the plot visualizing the relationship between both observed variables.</span>
+<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a>With our simple linear regression model, we will generate predictions of each country&#39;s average happiness score from the observed CPI score values and add random errors to the predictions. We will first create a function to do this then create a new dataset that is the exact same as the dataset we used for our model but with the simulated average happiness scores as a new variable.</span>
+<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a>create_pred <span class="ot">&lt;-</span> <span class="cf">function</span>(mod) {</span>
+<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod)</span>
+<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a>  sd <span class="ot">&lt;-</span> <span class="fu">sigma</span>(mod)</span>
+<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a>  random_errors <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(pred), <span class="at">mean =</span> <span class="dv">0</span>, sd)</span>
+<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>  pred_w_errors <span class="ot">&lt;-</span> pred <span class="sc">+</span> random_errors</span>
+<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(pred_w_errors)</span>
+<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> data_by_country <span class="sc">|&gt;</span></span>
+<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sim_happiness =</span> <span class="fu">create_pred</span>(data_lm))</span>
+<span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-245"><a href="#cb13-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-246"><a href="#cb13-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sim_data,</span>
-<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> corruption,</span>
-<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> sim_happiness)) <span class="sc">+</span></span>
-<span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> </span>
-<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Relationship Between Various Countries&#39; Simulated Happiness Scores and CPI&quot;</span>,</span>
-<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Simulated Average Happiness Score (Out of 100) Between 2012-2017&quot;</span>,</span>
-<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Average Corruption Perception Index Score (Out of 100) Between 2012-2017&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
-<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data_by_country,</span>
-<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> corruption,</span>
-<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> happiness)) <span class="sc">+</span></span>
-<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> </span>
-<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Relationship Between Various Countries&#39; Happiness Scores and CPI&quot;</span>,</span>
-<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Average Happiness Score (Out of 100) Between 2012-2017&quot;</span>,</span>
-<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Average Corruption Perception Index Score (Out of 100) Between 2012-2017&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
-<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a>From the side-by-side plots above, we can see that the simulated average happiness scores are reasonably similar to the observed average happiness scores, as both plots have a moderately strong, positive linear relationship. When studying the plots further, however, we noticed that the relationship with the simulated average happiness scores as the response seems to have a slightly flatter slope and a marginally higher intercept than the relationship with the observed average happiness scores. Depsite these minor differences, the variability in the plots seem relatively similar based on the visualization, and we feel confident about the similarities between the two plots.</span>
+<span id="cb13-243"><a href="#cb13-243" aria-hidden="true" tabindex="-1"></a>Now that we have our new dataset with the simulated happiness observations, we will plot the simulated average happiness score versus the observed CPI score for each country and compare it to the plot visualizing the relationship between both observed variables.</span>
+<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sim_data,</span>
+<span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> corruption,</span>
+<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> sim_happiness)) <span class="sc">+</span></span>
+<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Relationship Between Various Countries&#39; Simulated Happiness Scores and CPI&quot;</span>,</span>
+<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Simulated Average Happiness Score (Out of 100) Between 2012-2017&quot;</span>,</span>
+<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Average Corruption Perception Index Score (Out of 100) Between 2012-2017&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data_by_country,</span>
+<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> corruption,</span>
+<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> happiness)) <span class="sc">+</span></span>
+<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Relationship Between Various Countries&#39; Happiness Scores and CPI&quot;</span>,</span>
+<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Average Happiness Score (Out of 100) Between 2012-2017&quot;</span>,</span>
+<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Average Corruption Perception Index Score (Out of 100) Between 2012-2017&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Generating Multiple Predictive Checks</span></span>
+<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a>From the side-by-side plots above, we can see that the simulated average happiness scores are reasonably similar to the observed average happiness scores, as both plots have a moderately strong, positive linear relationship. When studying the plots further, however, we noticed that the relationship with the simulated average happiness scores as the response seems to have a slightly flatter slope and a marginally higher intercept than the relationship with the observed average happiness scores. Depsite these minor differences, the variability in the plots seem relatively similar based on the visualization, and we feel confident about the similarities between the two plots.</span>
 <span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a>To conduct predictive checks, we will generate 1,000 simulated datasets and regress each against our observed dataset. We will then keep the $R^2$ value from each regression and plot the distribution of the $R^2$ values from the regressions to further assess our model&#39;s fit. If the $R^2$ values are distributed closer to 1, that would indicate good fit, however, if they are closer to 0, that would indicate that our model is not as good of a fit.</span>
+<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## Generating Multiple Predictive Checks</span></span>
 <span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-284"><a href="#cb13-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a>fit_and_get_r_squared <span class="ot">&lt;-</span> <span class="cf">function</span>(observed_data, observed_y, simulated_y) {</span>
-<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(observed_y, simulated_y)</span>
+<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a>To conduct predictive checks, we will generate 1,000 simulated datasets and regress each against our observed dataset. We will then keep the $R^2$ value from each regression and plot the distribution of the $R^2$ values from the regressions to further assess our model&#39;s fit. If the $R^2$ values are distributed closer to 1, that would indicate good fit, however, if they are closer to 0, that would indicate that our model is not as good of a fit.</span>
+<span id="cb13-283"><a href="#cb13-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a>fit_and_get_r_squared <span class="ot">&lt;-</span> <span class="cf">function</span>(observed_data, observed_y, simulated_y) {</span>
 <span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(combined_data)</span>
+<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(observed_y, simulated_y)</span>
 <span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>  simulated_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(observed_y <span class="sc">~</span> simulated_y, <span class="at">data =</span> combined_data)</span>
+<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(combined_data)</span>
 <span id="cb13-292"><a href="#cb13-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">summary</span>(simulated_model)<span class="sc">$</span>r.squared)</span>
-<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a>simulate_r_squared <span class="ot">&lt;-</span> <span class="cf">function</span>(observed_data, formula, <span class="at">n_simulations =</span> <span class="dv">1000</span>) {</span>
+<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a>  simulated_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(observed_y <span class="sc">~</span> simulated_y, <span class="at">data =</span> combined_data)</span>
+<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">summary</span>(simulated_model)<span class="sc">$</span>r.squared)</span>
+<span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-297"><a href="#cb13-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, <span class="at">data =</span> observed_data)</span>
+<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a>simulate_r_squared <span class="ot">&lt;-</span> <span class="cf">function</span>(observed_data, formula, <span class="at">n_simulations =</span> <span class="dv">1000</span>) {</span>
 <span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a>  simulated_responses <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span>n_simulations, <span class="sc">~</span> <span class="fu">create_pred</span>(mod))</span>
+<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, <span class="at">data =</span> observed_data)</span>
 <span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a>  observed_y <span class="ot">&lt;-</span> observed_data[[<span class="fu">all.vars</span>(formula)[<span class="dv">1</span>]]]</span>
+<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a>  simulated_responses <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span>n_simulations, <span class="sc">~</span> <span class="fu">create_pred</span>(mod))</span>
 <span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a>  r_squared_values <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(simulated_responses, <span class="sc">~</span> <span class="fu">fit_and_get_r_squared</span>(observed_data, observed_y, .x))</span>
-<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(r_squared_values)</span>
-<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a>  observed_y <span class="ot">&lt;-</span> observed_data[[<span class="fu">all.vars</span>(formula)[<span class="dv">1</span>]]]</span>
+<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a>  r_squared_values <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(simulated_responses, <span class="sc">~</span> <span class="fu">fit_and_get_r_squared</span>(observed_data, observed_y, .x))</span>
+<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(r_squared_values)</span>
+<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-310"><a href="#cb13-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> happiness <span class="sc">~</span> corruption</span>
+<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a>r_squared_values <span class="ot">&lt;-</span> <span class="fu">simulate_r_squared</span>(data_by_country, formula, <span class="at">n_simulations =</span> <span class="dv">1000</span>)</span>
+<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> happiness <span class="sc">~</span> corruption</span>
 <span id="cb13-314"><a href="#cb13-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a>r_squared_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">r_squared =</span> r_squared_values)</span>
+<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a>r_squared_values <span class="ot">&lt;-</span> <span class="fu">simulate_r_squared</span>(data_by_country, formula, <span class="at">n_simulations =</span> <span class="dv">1000</span>)</span>
 <span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> r_squared_df, </span>
-<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> r_squared)) <span class="sc">+</span></span>
-<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of R-squared Values from Simulated Regressions&quot;</span>,</span>
-<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
-<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;R-squared&quot;</span>,</span>
-<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a>Based on the distribution of the 1000 $R^2$ values for the relationship between the simulated and observed average happiness score above, we can conclude that our fitted model would not produce data that is very similar to our observed data since most of the $R^2$ values lie between 0.15 and 0.35. Running this simulation 1000 times means that we are examining numerous possible simulated models that our observed model could produce, and the highest $R^2$ values we attained are around 0.4, meaning only 40% of the variability in our observed happiness scores can be explained by the simulated happiness scores. Without a very strong $R^2$ between observed and simulated happiness scores, it&#39;s more difficult to make conclusions based on this data. After conducting predictive checks, we are less confident on the strength of our model fit, however, we can still be assured that CPI score does partially explain some of the variability in the response and is a statistically significant predictor in average happiness score for a country.</span>
+<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a>r_squared_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">r_squared =</span> r_squared_values)</span>
+<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> r_squared_df, </span>
+<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> r_squared)) <span class="sc">+</span></span>
+<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of R-squared Values from Simulated Regressions&quot;</span>,</span>
+<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
+<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;R-squared&quot;</span>,</span>
+<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-328"><a href="#cb13-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a>Based on the distribution of the 1000 $R^2$ values for the relationship between the simulated and observed average happiness score above, we can conclude that our fitted model would not produce data that is very similar to our observed data since most of the $R^2$ values lie between 0.15 and 0.35. Running this simulation 1000 times means that we are examining numerous possible simulated models that our observed model could produce, and the highest $R^2$ values we attained are around 0.4, meaning only 40% of the variability in our observed happiness scores can be explained by the simulated happiness scores. Without a very strong $R^2$ between observed and simulated happiness scores, it&#39;s more difficult to make conclusions based on this data. After conducting predictive checks, we are less confident on the strength of our model fit, however, we can still be assured that CPI score does partially explain some of the variability in the response and is a statistically significant predictor in average happiness score for a country.</span>
 <span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Investopedia.com</span><span class="co">](https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp)</span></span>
+<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
 <span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">ChatGPT.com</span><span class="co">](https://chatgpt.com/)</span></span>
+<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Investopedia.com</span><span class="co">](https://www.investopedia.com/articles/investing/012215/how-corruption-affects-emerging-economies.asp)</span></span>
+<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-335"><a href="#cb13-335" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">ChatGPT.com</span><span class="co">](https://chatgpt.com/)</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

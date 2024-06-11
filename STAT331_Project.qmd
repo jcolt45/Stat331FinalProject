@@ -175,6 +175,8 @@ According to the fitted linear model above, for every one point increase in the 
 
 ## Model Fit
 
+Below is a table displaying the total variance of the response values in our fitted model, and how much of the variance is explained by both our fitted values and our residuals.
+
 ```{r}
 response_variance <- var(data_by_country$happiness)
 fitted_values <- predict(data_lm)
